@@ -26,6 +26,7 @@ version(DFL_NO_MENUS)
 else
 {
 	private import dfl.menu;
+	import core.memory;
 }
 
 
@@ -1198,6 +1199,7 @@ final class Application // docmain
 			menus = tempmenus;
 			
 			menus[nmenus++] = menu;
+			GC.addRoot(cast(void*)menu);
 			
 			return prevMenuID;
 		}
@@ -1223,6 +1225,7 @@ final class Application // docmain
 			menus = tempmenus;
 			
 			menus[idx] = menu;
+			GC.addRoot(cast(void*)menu);
 		}
 		
 		
@@ -1240,6 +1243,7 @@ final class Application // docmain
 			return;
 			
 			found:
+			GC.removeRoot(cast(void*)menu);
 			if(nmenus == 1)
 			{
 				dfl.internal.clib.free(menus);
