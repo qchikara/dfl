@@ -4811,12 +4811,12 @@ class Control: DObject, IWindow // docmain
 					if(cur)
 					{
 						if(cast(HCURSOR)GetClassLongA(hwnd, GCL_HCURSOR) != cur.handle)
-							SetClassLongA(hwnd, GCL_HCURSOR, cast(LONG)cur.handle);
+							SetClassLongPtrA(hwnd, GCL_HCURSOR, cast(LONG_PTR)cur.handle);
 					}
 					else
 					{
 						if(cast(HCURSOR)GetClassLongA(hwnd, GCL_HCURSOR) != HCURSOR.init)
-							SetClassLongA(hwnd, GCL_HCURSOR, cast(LONG)cast(HCURSOR)null);
+							SetClassLongPtrA(hwnd, GCL_HCURSOR, cast(LONG_PTR)cast(HCURSOR)null);
 					}
 					Control.defWndProc(msg);
 					return;
