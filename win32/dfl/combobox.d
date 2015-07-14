@@ -977,6 +977,23 @@ class ComboBox: ListControl // docmain
 				prevWndProc(msg);
 				return; // Handled by reflected message.
 			
+			case WM_CTLCOLORLISTBOX: // @@@
+				// holds the handle value while the popup shows
+				auto hwndLbox = cast(HWND)msg.lParam;
+				assert(hwndLbox, "WM_CTLCOLORLISTBOX hwnd null");
+				m_hwndLbox = hwndLbox;
+				break;
+			
+			case WM_COMMAND: // @@@
+				auto hwndFrom = cast(HWND)msg.lParam;
+				if (hwndFrom == m_hwndLbox)
+				{
+					prevWndProc(msg); // See: ControlSuperClass.wndProc()
+					onReflectedMessage(msg);
+					return; // Handled by reflected message.
+				}
+				break;
+			
 			default:
 		}
 		super.wndProc(msg);
@@ -989,7 +1006,7 @@ class ComboBox: ListControl // docmain
 	ObjectCollection icollection;
 	package uint lim = 30_000; // Documented as default.
 	bool _sorting = false;
-	
+	HWND m_hwndLbox; // @@@ for easy workaround: WM_COMMAND - onReflectedMessage
 	
 	package:
 	final:
