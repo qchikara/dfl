@@ -790,11 +790,11 @@ class OpenFileDialog: FileDialog // docmain
 	}
 	
 	
-	private import std.stream; // TO-DO: remove this import; use dfl.internal.dlib.
+	//private import std.stream; // TO-DO: remove this import; use dfl.internal.dlib.
 	
 	///
-	final Stream openFile()
-	{
+	deprecated final DStream openFile()
+	{ import std.stream; // TO-DO: remove this import; use dfl.internal.dlib.
 		return new File(fileName(), FileMode.In);
 	}
 	
@@ -902,13 +902,13 @@ class SaveFileDialog: FileDialog // docmain
 	}
 	
 	
-	private import std.stream; // TO-DO: remove this import; use dfl.internal.dlib.
+	//private import std.stream; // TO-DO: remove this import; use dfl.internal.dlib.
 		
 	///
 	// Opens and creates with read and write access.
 	// Warning: if file exists, it's truncated.
-	final Stream openFile()
-	{
+	deprecated final DStream openFile()
+	{import std.stream; // TO-DO: remove this import; use dfl.internal.dlib.
 		return new File(fileName(), FileMode.OutNew | FileMode.Out | FileMode.In);
 	}
 	
