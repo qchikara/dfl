@@ -343,17 +343,17 @@ final class Application // docmain
 	
 	
 	///
-	void addMessageFilter(IMessageFilter mf)
+	void addMessageFilter(DflMessageFilter mf)
 	{
 		//filters ~= mf;
 		
-		IMessageFilter[] fs = filters;
+		DflMessageFilter[] fs = filters;
 		fs ~= mf;
 		filters = fs;
 	}
 	
 	/// ditto
-	void removeMessageFilter(IMessageFilter mf)
+	void removeMessageFilter(DflMessageFilter mf)
 	{
 		size_t i;
 		for(i = 0; i != filters.length; i++)
@@ -1484,10 +1484,10 @@ final class Application // docmain
 	private:
 	static:
 	size_t[void*] _refs;
-	IMessageFilter[] filters;
+	DflMessageFilter[] filters;
 	DWORD tlsThreadFlags;
 	DWORD tlsControl;
-	DWORD tlsFilter; // IMessageFilter[]*.
+	DWORD tlsFilter; // DflMessageFilter[]*.
 	version(CUSTOM_MSG_HOOK)
 		DWORD tlsHook; // HHOOK.
 	Control[HWND] controls;
@@ -1534,12 +1534,12 @@ final class Application // docmain
 	
 	private struct TlsFilterValue
 	{
-		IMessageFilter[] filters;
+		DflMessageFilter[] filters;
 	}
 	
 	
 	/+
-	@property void filters(IMessageFilter[] filters) // setter
+	@property void filters(DflMessageFilter[] filters) // setter
 	{
 		// The TlsFilterValue is being garbage collected!
 		
@@ -1551,7 +1551,7 @@ final class Application // docmain
 	}
 	
 	
-	@property IMessageFilter[] filters() nothrow // getter
+	@property DflMessageFilter[] filters() nothrow // getter
 	{
 		TlsFilterValue* val = cast(TlsFilterValue*)TlsGetValue(tlsFilter);
 		if(!val)
@@ -1625,9 +1625,9 @@ final class Application // docmain
 			{
 				// Keep a local reference so that handlers
 				// may be added and removed during filtering.
-				IMessageFilter[] local = filters;
+				DflMessageFilter[] local = filters;
 				
-				foreach(IMessageFilter mf; local)
+				foreach(DflMessageFilter mf; local)
 				{
 					// Returning true prevents dispatching.
 					if(mf.preFilterMessage(msg))

@@ -340,7 +340,7 @@ struct Message // docmain
 
 
 ///
-interface IMessageFilter // docmain
+interface DflMessageFilter // docmain
 {
 	///
 	// Return false to allow the message to be dispatched.
