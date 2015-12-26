@@ -3031,7 +3031,7 @@ class Form: ContainerControl, IDialogResult // docmain
 	}
 	
 	
-	private static class FormMessageFilter: IMessageFilter
+	private static class FormMessageFilter: DflMessageFilter
 	{
 		protected bool preFilterMessage(ref Message m)
 		{
