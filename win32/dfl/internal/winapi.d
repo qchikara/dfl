@@ -5,8 +5,59 @@ module dfl.internal.winapi;
 
 
 public import core.sys.windows.windows;
-private import dfl.internal.wincom;
 
+static if (__VERSION__ >= 2070) {
+    public import core.sys.windows.commctrl;
+    public import core.sys.windows.richedit;
+    public import core.sys.windows.wtypes : DVASPECT;
+    public import core.sys.windows.winbase : PACTCTXW;
+
+extern(Windows) nothrow:
+
+    alias DVASPECT_CONTENT = DVASPECT.DVASPECT_CONTENT;
+    enum BTNS_WHOLEDROPDOWN = 0x80; //static if (_WIN32_IE >= 0x500)
+    enum : UINT {
+        CFM_UNDERLINETYPE = 0x00800000,
+        CFM_WEIGHT = 0x00400000,
+        CFM_BACKCOLOR = 0x04000000,
+        CFE_AUTOBACKCOLOR	= CFM_BACKCOLOR,
+        CFU_UNDERLINE = 1,
+        BIF_NONEWFOLDERBUTTON = 0x0200, // shell32.dll 6.0+
+        GMEM_SHARE = 0x2000, // deprecated, ignored
+    }
+    
+    int MulDiv(int nNumber, int nNumerator, int nDenominator) pure nothrow; // pure for enhancedmetafile
+
+    // THEME
+    mixin DECLARE_HANDLE!("HTHEME");
+	alias HRESULT THEMEAPI;
+	HTHEME GetWindowTheme(HWND hWnd);
+	THEMEAPI SetWindowTheme(HWND hwnd, LPCWSTR pszSubAppName, LPCWSTR pszSubIdList);
+	DWORD GetThemeAppProperties();
+	BOOL IsAppThemed();
+	HTHEME OpenThemeData(HWND hwnd, LPCWSTR pszClassList);
+	HRESULT CloseThemeData(HTHEME hTheme);
+	HRESULT GetThemeColor(HTHEME hTheme, int iPartId, int iStateId, int iPropId, COLORREF *pColor);
+    
+	version (Win64) {
+		ULONG_PTR SetClassLongPtrA(HWND hWnd, int nIndex, LONG_PTR dwNewLong);
+		ULONG_PTR GetClassLongPtrA(HWND hWnd, int nIndex);
+		LONG_PTR SetWindowLongPtrA(HWND hWnd, int nIndex, LONG_PTR dwNewLong);
+		LONG_PTR GetWindowLongPtrA(HWND hWnd, int nIndex);
+	} else {
+		alias SetClassLongPtrA = SetClassLongA;
+		alias GetClassLongPtrA = GetClassLongA;
+		alias SetWindowLongPtrA = SetWindowLongA;
+		alias GetWindowLongPtrA = GetWindowLongA;
+	}
+    
+    // SOCKET
+	int WSACancelAsyncRequest(HANDLE hAsyncTaskHandle);
+	HANDLE WSAAsyncGetHostByName(HWND hWnd, uint wMsg, PCSTR name, char* buf, int buflen);
+	HANDLE WSAAsyncGetHostByAddr(HWND hWnd, uint wMsg, PCSTR addr, int len, int type, char* buf, int buflen);
+} else:
+
+private import dfl.internal.wincom;
 
 version(D_Version2)
 {
