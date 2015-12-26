@@ -477,8 +477,8 @@ else
 				proc = cast(typeof(proc))GetProcAddress(GetModuleHandleA("comctl32.dll"), "ImageList_Create");
 			return proc(cx, cy, flags, cInitial, cGrow);
 		}
-		
-		int imageListAddIcon(
+        static if (__VERSION__ >= 2070) alias imageListAddIcon = ImageList_AddIcon; else
+		int imageListAddIcon( // BUG: why to load dynmaically the MACRO function ??
 			HIMAGELIST himl, HICON hicon)
 		{
 			alias typeof(&ImageList_AddIcon) TProc;
