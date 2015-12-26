@@ -5,6 +5,34 @@ module dfl.internal.wincom;
 
 private import dfl.internal.winapi;
 
+static if (__VERSION__ >= 2070) {
+    public import core.sys.windows.com, core.sys.windows.ocidl;
+    public import core.sys.windows.objidl, core.sys.windows.olectl;
+    public import core.sys.windows.shlobj;
+
+    alias DATADIR_GET = DATADIR.DATADIR_GET;
+    alias TYMED_HGLOBAL = TYMED.TYMED_HGLOBAL;
+    alias STREAM_SEEK_SET = STREAM_SEEK.STREAM_SEEK_SET;
+    alias STREAM_SEEK_CUR = STREAM_SEEK.STREAM_SEEK_CUR;
+    alias STREAM_SEEK_END = STREAM_SEEK.STREAM_SEEK_END;
+
+    // REDEFINE_UUIDS
+    alias IID_IUnknown _IID_IUnknown;
+    alias IID_IDataObject _IID_IDataObject;
+    alias IID_IPicture _IID_IPicture;
+    alias IID_ISequentialStream _IID_ISequentialStream;
+    alias IID_IStream _IID_IStream;
+    alias IID_IDropTarget _IID_IDropTarget;
+    alias IID_IDropSource _IID_IDropSource;
+    alias IID_IEnumFORMATETC _IID_IEnumFORMATETC;
+
+    // ???
+    extern(Windows)
+    LONG MAP_LOGHIM_TO_PIX(LONG x, LONG logpixels)
+    {
+        return MulDiv(logpixels, x, 2540);
+    }
+} else: // @@@
 
 version(WINE)
 	version = _dfl_needcom;
