@@ -87,8 +87,8 @@ class NotifyIcon // docmain
 	{
 		//return nid.szTip[0 .. tipLen]; // Returning possibly mutated text!
 		//return nid.szTip[0 .. tipLen].dup;
-		//return nid.szTip[0 .. tipLen].idup; // Needed in D2. Doesn't work in D1.
-		return cast(Dstring)nid.szTip[0 .. tipLen].dup; // Needed in D2. Doesn't work in D1.
+		return nid.szTip[0 .. tipLen].idup; // Needed in D2. Doesn't work in D1.
+		//return cast(Dstring)nid.szTip[0 .. tipLen].dup; // Needed in D2. Doesn't work in D1.
 	}
 	
 	
@@ -256,7 +256,7 @@ class NotifyIcon // docmain
 	
 	private:
 	
-	NOTIFYICONDATA nid;
+	NOTIFYICONDATAA nid;
 	int tipLen = 0;
 	version(DFL_NO_MENUS)
 	{
