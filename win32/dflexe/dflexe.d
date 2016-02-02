@@ -40,7 +40,7 @@ pragma(lib, "Comdlg32.lib");
 private extern(Windows)
 {
 	DWORD GetLogicalDriveStringsA(DWORD nBufferLength,LPSTR lpBuffer);
-	UINT GetDriveTypeA(LPCTSTR lpRootPathName);
+	UINT GetDriveTypeA(LPCSTR lpRootPathName);
 	DWORD GetShortPathNameA(LPCSTR lpszLongPath, LPSTR lpszShortPath, DWORD cchBuffer);
 	
 	
