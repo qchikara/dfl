@@ -1597,7 +1597,8 @@ class Picture: Image // docmain
 	static dfl.internal.wincom.IPicture _fromIStream(dfl.internal.wincom.IStream istm)
 	{
 		dfl.internal.wincom.IPicture ipic;
-		switch(OleLoadPicture(istm, 0, FALSE, &_IID_IPicture, cast(void**)&ipic))
+		const lval = _IID_IPicture;
+		switch(OleLoadPicture(istm, 0, FALSE, &lval, cast(void**)&ipic))
 		{
 			case S_OK:
 				return ipic;
