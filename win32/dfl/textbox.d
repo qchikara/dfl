@@ -882,7 +882,7 @@ abstract class TextBoxBase: ControlSuperClass // docmain
 			synchronized
 			{
 				if(!def)
-					def = new SafeCursor(LoadCursorA(null, IDC_IBEAM));
+					def = new SafeCursor(LoadCursor(null, IDC_IBEAM));
 			}
 		}
 		

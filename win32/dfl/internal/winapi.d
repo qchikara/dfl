@@ -1872,7 +1872,7 @@ extern(Windows) nothrow:
 	const HWND HWND_MESSAGE = cast(HWND)-3; // Win2000/XP only.
 	
 	
-	struct NOTIFYICONDATA
+	struct NOTIFYICONDATAA
 	{
 		 DWORD cbSize; 
 		 HWND hWnd; 
@@ -1882,6 +1882,7 @@ extern(Windows) nothrow:
 		 HICON hIcon; 
 		 char[64] szTip; 
 	}
+    alias NOTIFYICONDATAA NOTIFYICONDATA; // A/W
 	alias NOTIFYICONDATA* PNOTIFYICONDATA;
 	
 	
@@ -3147,5 +3148,11 @@ extern(Windows) nothrow:
 	HMONITOR MonitorFromRect(LPCRECT lprc, DWORD dwFlags);
 	BOOL RegisterHotKey(HWND hWnd, int id, UINT fsModifiers, UINT vk);
 	BOOL UnregisterHotKey(HWND hWnd, int id);
+    
+    version (Unicode) {
+    } else {
+        alias LoadCursorA LoadCursor;
+        alias LoadIconA LoadIcon;
+    }
 //} // Temporary.
 

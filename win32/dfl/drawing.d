@@ -890,31 +890,31 @@ class SystemIcons // docmain
 	///
 	@property Icon application() // getter
 	{
-		return new Icon(LoadIconA(null, IDI_APPLICATION), false);
+		return new Icon(LoadIcon(null, IDI_APPLICATION), false);
 	}
 	
 	/// ditto
 	@property Icon error() // getter
 	{
-		return new Icon(LoadIconA(null, IDI_HAND), false);
+		return new Icon(LoadIcon(null, IDI_HAND), false);
 	}
 	
 	/// ditto
 	@property Icon question() // getter
 	{
-		return new Icon(LoadIconA(null, IDI_QUESTION), false);
+		return new Icon(LoadIcon(null, IDI_QUESTION), false);
 	}
 	
 	/// ditto
 	@property Icon warning() // getter
 	{
-		return new Icon(LoadIconA(null, IDI_EXCLAMATION), false);
+		return new Icon(LoadIcon(null, IDI_EXCLAMATION), false);
 	}
 	
 	/// ditto
 	@property Icon information() // getter
 	{
-		return new Icon(LoadIconA(null, IDI_INFORMATION), false);
+		return new Icon(LoadIcon(null, IDI_INFORMATION), false);
 	}
 }
 
