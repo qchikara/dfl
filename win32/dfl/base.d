@@ -9,6 +9,7 @@ private import dfl.internal.dlib, dfl.internal.clib;
 
 private import dfl.internal.winapi, dfl.drawing, dfl.event;
 
+version = SUPPORTS_HAND_CURSOR; // Windows 98+
 
 alias HWND HWindow;
 
