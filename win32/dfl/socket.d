@@ -4,7 +4,9 @@
 
 ///
 module dfl.socket;
-version (Win64) { /* not supported at this point */ } else:
+version (Win64) { /* not supported at this point */ } 
+//else static if (__VERSION__ >= 2070) {}
+else:
 
 version(WINE)
 {
@@ -23,7 +25,7 @@ private import dfl.internal.dlib, dfl.internal.clib;
 private
 {
 	private import std.socket, core.bitop;
-	private import std.c.windows.winsock;
+	private import core.sys.windows.winsock2; //std.c.windows.winsock;
 	
 	alias InternetHost DInternetHost;
 	alias InternetAddress DInternetAddress;
@@ -154,7 +156,7 @@ class AsyncSocket: DflSocket // docmain
 	}
 	
 	
-	protected override AsyncSocket accepting()
+	protected override AsyncSocket accepting() const // added const for 2.072 update
 	{
 		return new AsyncSocket;
 	}
