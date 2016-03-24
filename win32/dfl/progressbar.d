@@ -7,7 +7,7 @@ module dfl.progressbar;
 
 private import dfl.base, dfl.control, dfl.drawing, dfl.application,
 	dfl.event;
-private import dfl.internal.winapi;
+private import dfl.internal.winapi, dfl.internal.utf;
 
 
 private extern(Windows) void _initProgressbar();

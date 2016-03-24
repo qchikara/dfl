@@ -3,7 +3,7 @@ module dfl.toolbar;
 
 private import dfl.base, dfl.control, dfl.drawing, dfl.application,
 	dfl.event, dfl.collections;
-private import dfl.internal.winapi, dfl.internal.dlib;
+private import dfl.internal.winapi, dfl.internal.dlib, dfl.internal.utf;
 
 version(DFL_NO_IMAGELIST)
 {

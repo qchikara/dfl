@@ -5,7 +5,7 @@
 ///
 module dfl.messagebox;
 
-private import dfl.internal.winapi, dfl.internal.dlib, dfl.base;
+private import dfl.internal.winapi, dfl.internal.dlib, dfl.internal.utf, dfl.base;
 
 
 ///

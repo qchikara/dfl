@@ -6,7 +6,7 @@
 module dfl.groupbox;
 
 private import dfl.control, dfl.base, dfl.button, dfl.drawing;
-private import dfl.internal.winapi, dfl.application, dfl.event;
+private import dfl.internal.winapi, dfl.internal.utf, dfl.application, dfl.event;
 
 
 private extern(Windows) void _initButton();

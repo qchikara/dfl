@@ -5,7 +5,7 @@
 ///
 module dfl.tabcontrol;
 
-private import dfl.internal.dlib;
+private import dfl.internal.dlib, dfl.internal.utf;
 
 private import dfl.control, dfl.panel, dfl.internal.winapi, dfl.drawing;
 private import dfl.application, dfl.event, dfl.base, dfl.collections;

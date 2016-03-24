@@ -5,7 +5,7 @@
 ///
 module dfl.base;
 
-private import dfl.internal.dlib, dfl.internal.clib;
+private import dfl.internal.dlib, dfl.internal.clib, dfl.internal.utf;
 
 private import dfl.internal.winapi, dfl.drawing, dfl.event;
 
