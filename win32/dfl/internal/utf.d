@@ -431,7 +431,7 @@ extern(Windows)
 	alias typeof(&SetMenuItemInfoW) SetMenuItemInfoWProc;
 	alias typeof(&InsertMenuItemW) InsertMenuItemWProc;
 	alias typeof(&CreateFontIndirectW) CreateFontIndirectWProc;
-	package alias typeof(&GetObjectW) GetObjectWProc;
+	alias typeof(&GetObjectW) GetObjectWProc;
 }
 
 
