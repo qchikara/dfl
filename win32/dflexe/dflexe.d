@@ -27,6 +27,7 @@ private import std.process;
 private import std.c.stdlib;
 
 private import dfl.all, dfl.internal.winapi, dfl.internal.utf;
+private import dfl.internal.dlib; // DThrowable
 
 alias dfl.internal.winapi.ShellExecuteA ShellExecuteA;
 alias dfl.environment.Environment Environment;
@@ -104,9 +105,9 @@ void install()
 	bool mboxdmdpath(string xpath)
 	{
 		switch(msgBox("Found DMD at '" ~ xpath ~ "'.\r\n"
-			"Would you like to use this path?\r\n\r\n"
-			"Press No to keep looking.\r\n"
-			"Press Cancel to abort and try again later.",
+			~ "Would you like to use this path?\r\n\r\n"
+			~ "Press No to keep looking.\r\n"
+			~ "Press Cancel to abort and try again later.",
 			"DFL", MsgBoxButtons.YES_NO_CANCEL, MsgBoxIcon.QUESTION))
 		{
 			case DialogResult.YES: return true;
@@ -422,26 +423,26 @@ void showUsage()
 {
 	writefln("DFL written by Christopher E. Miller");
 	writef("Usage:\n"
-		"   dfl [<switches...>] <files...>\n\n");
+		~ "   dfl [<switches...>] <files...>\n\n");
 	writef("Switches:\n"
-		"   -dmd             Show DMD's usage.\n"
-		"   -dfl-ver         Show DFL version installed.\n"
-		"   -dfl-nover       Do not perform version check.\n"
-		"   -dfl-build       Build DFL lib files.\n"
-		"   -dfl-nodflc      Do not run dflc batch files.\n"
-		//"   -dfl-dflc        Run dflc batch files if building DFL lib files.\n"
-		"   -dfl-readme      Open the DFL readme.txt file.\n"
-		"   -dfl-doc         Open the DFL documentation.\n"
-		"   -dfl-tips        Open the DFL tips.txt file.\n"
-		"   -dfl-eg          Explore the DFL examples directory.\n"
-		"   -dfl-gui         Make a Windows GUI exe without a console.\n"
-		"   -dfl-con         Make a console exe (default).\n"
-		"   -dfl-exet=<x>    Override executable type.\n"
-		"   -dfl-su=<x1:x2>  Override subsystem name and version.\n"
-		"   -dfl-i           Force install.\n"
-		"   <other>          Any other non-dfl switches are passed to DMD.\n");
+		~ "   -dmd             Show DMD's usage.\n"
+		~ "   -dfl-ver         Show DFL version installed.\n"
+		~ "   -dfl-nover       Do not perform version check.\n"
+		~ "   -dfl-build       Build DFL lib files.\n"
+		~ "   -dfl-nodflc      Do not run dflc batch files.\n"
+		//~ "   -dfl-dflc        Run dflc batch files if building DFL lib files.\n"
+		~ "   -dfl-readme      Open the DFL readme.txt file.\n"
+		~ "   -dfl-doc         Open the DFL documentation.\n"
+		~ "   -dfl-tips        Open the DFL tips.txt file.\n"
+		~ "   -dfl-eg          Explore the DFL examples directory.\n"
+		~ "   -dfl-gui         Make a Windows GUI exe without a console.\n"
+		~ "   -dfl-con         Make a console exe (default).\n"
+		~ "   -dfl-exet=<x>    Override executable type.\n"
+		~ "   -dfl-su=<x1:x2>  Override subsystem name and version.\n"
+		~ "   -dfl-i           Force install.\n"
+		~ "   <other>          Any other non-dfl switches are passed to DMD.\n");
 	writef("Files:\n"
-		"   Files passed to DMD. File name wildcard expansion supported.\n");
+		~ "   Files passed to DMD. File name wildcard expansion supported.\n");
 }
 
 
@@ -762,7 +763,7 @@ int main(/+ string[] args +/)
 				if(-1 != std.string.indexOf(scx, "-version=Tango"))
 					dlibname = "Tango";
 			}
-			catch
+			catch (DThrowable e)
 			{
 			}
 		}
@@ -794,7 +795,7 @@ int main(/+ string[] args +/)
 			{
 				dmcpathbefore =
 					"\r\n   @set _old_dmc_path=%dmc_path%"
-					"\r\n   @set dmc_path=" ~ dmcpath
+				  ~ "\r\n   @set dmc_path=" ~ dmcpath
 					;
 				dmcpathafter =
 					"\r\n   @set dmc_path=%_old_dmc_path%"
@@ -822,9 +823,9 @@ int main(/+ string[] args +/)
             
 			batf.writeString(
 				"\r\n   @set _old_dmd_path=%dmd_path%"
-				"\r\n   @set dmd_path=" ~ dmdpath
-				~"\r\n   @set _old_dmd_path_windows=%dmd_path_windows%"
-				"\r\n   @set dmd_path_windows=" ~ dmdpath_windows
+			  ~ "\r\n   @set dmd_path=" ~ dmdpath
+			  ~ "\r\n   @set _old_dmd_path_windows=%dmd_path_windows%"
+			  ~ "\r\n   @set dmd_path_windows=" ~ dmdpath_windows
 				
 				);
 			
@@ -832,11 +833,11 @@ int main(/+ string[] args +/)
 			
 			batf.writeString(
 				"\r\n   @set _old_dlib=%dlib%"
-				"\r\n   @set dlib=" ~ dlibname);
+			  ~ "\r\n   @set dlib=" ~ dlibname);
 			
 			batf.writeString(
 				"\r\n   @set _old_dfl_go_move=%dfl_go_move%"
-				"\r\n   @set dfl_go_move=1");
+              ~ "\r\n   @set dfl_go_move=1");
 			
 			batf.writeString("\r\n   @set dfl_failed=-1"); // Let makelib.bat unset this.
 			
@@ -844,7 +845,7 @@ int main(/+ string[] args +/)
             // call the batch with the model parameter
 			batf.writeString("\r\n   @call \"" ~ std.path.buildPath(dflsrcdir, "makelib.bat") ~ "\" %MODEL%\r\n");
 			
-			batf.writeString("\r\n" `@if not "%dfl_failed%" == "" goto fail`); // No longer using go.bat for this.
+			batf.writeString("\r\n" ~ `@if not "%dfl_failed%" == "" goto fail`); // No longer using go.bat for this.
 			
 			if(dflcs.length)
 			{
@@ -887,7 +888,7 @@ int main(/+ string[] args +/)
 			batf.writeString("\r\n   @set dfl_go_move=%_old_dfl_go_move%");
 			
 			batf.writeString("\r\n   @set dmd_path=%_old_dmd_path%"
-				"\r\n   @set dmd_path_windows=%_old_dmd_path_windows%");
+				~ "\r\n   @set dmd_path_windows=%_old_dmd_path_windows%");
 			
 			batf.writeString(
 				"\r\n   @" ~ olddrive
@@ -1080,7 +1081,7 @@ int main(/+ string[] args +/)
 					}
 				}
 			}
-			catch
+			catch (DThrowable e)
 			{
 			}
 			
@@ -1110,14 +1111,14 @@ int main(/+ string[] args +/)
 						|| std.string.icmp(dfllibdlibname, dlibname))
 					{
 						writefln("*** Warning: DFL lib files were not compiled with the current DMD compiler."
-							"\nIt is recommended you rebuild the DFL lib files to ensure binary compatibility."
+							~ "\nIt is recommended you rebuild the DFL lib files to ensure binary compatibility."
 							/+ "\n (-nover skips this check) " +/);
 						askBuildDflNow();
 					}
 					else if(dfloptions != dfllibdfloptions)
 					{
 						writefln("*** Warning: DFL lib files were not compiled with the current dfl_options."
-							"\nIt is recommended you rebuild the DFL lib files to ensure binary compatibility."
+							~ "\nIt is recommended you rebuild the DFL lib files to ensure binary compatibility."
 							);
 						askBuildDflNow();
 					}
@@ -1167,7 +1168,7 @@ int main(/+ string[] args +/)
 				{
 					doVerCheck();
 				}
-				catch
+				catch (DThrowable e)
 				{
 					writefln("Error checking versions; use switch -ver for details");
 				}
