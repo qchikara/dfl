@@ -2096,11 +2096,12 @@ extern(Windows)
 {
 	alias BOOL function(LPTRACKMOUSEEVENT lpEventTrack) TrackMouseEventProc;
 	alias BOOL function(HWND, COLORREF, BYTE, DWORD) SetLayeredWindowAttributesProc;
-	
+	/+
 	alias HTHEME function(HWND) GetWindowThemeProc;
 	alias BOOL function(HTHEME hTheme, int iPartId, int iStateId) IsThemeBackgroundPartiallyTransparentProc;
 	alias HRESULT function(HWND hwnd, HDC hdc, RECT* prc) DrawThemeParentBackgroundProc;
 	alias void function(DWORD dwFlags) SetThemeAppPropertiesProc;
+    +/
 }
 
 

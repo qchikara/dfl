@@ -29,7 +29,7 @@ extern(Windows) nothrow:
     int MulDiv(int nNumber, int nNumerator, int nDenominator) pure nothrow; // pure for enhancedmetafile
 
     // THEME
-    mixin DECLARE_HANDLE!("HTHEME");
+    alias HTHEME = void*; // mixin DECLARE_HANDLE!("HTHEME");
 	alias HRESULT THEMEAPI;
 	HTHEME GetWindowTheme(HWND hWnd);
 	THEMEAPI SetWindowTheme(HWND hwnd, LPCWSTR pszSubAppName, LPCWSTR pszSubIdList);
