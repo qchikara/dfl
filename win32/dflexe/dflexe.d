@@ -22,7 +22,7 @@
 import std.algorithm;
 import std.array;
 private import std.conv, std.stdio, std.string, std.path, std.file,
-	std.random, std.cstream, std.stream;
+	std.random; //, std.cstream, std.stream;
 private import std.c.stdlib;
 
 private import dfl.all, dfl.internal.winapi, dfl.internal.utf;
@@ -821,16 +821,16 @@ int main(/+ string[] args +/)
 						dflcs ~= de.name;
 			
 			//@
-			scope batf = new BufferedFile(batfilepath, FileMode.OutNew);
+			scope batf = std.stdio.File(batfilepath, "wb"); // new BufferedFile(batfilepath, FileMode.OutNew);
 			
-			batf.writeString(
+			batf.write(
 				"\r\n   @" ~ std.path.driveName(dflsrcdir)
 				~ "\r\n   @cd \"" ~ dflsrcdir ~ "\"");
 			
             // argument %1 will be passed by the call to system() below
-			batf.writeString("\r\n   @set MODEL=%1");
+			batf.write("\r\n   @set MODEL=%1");
             
-			batf.writeString(
+			batf.write(
 				"\r\n   @set _old_dmd_path=%dmd_path%"
 			  ~ "\r\n   @set dmd_path=" ~ dmdpath
 			  ~ "\r\n   @set _old_dmd_path_windows=%dmd_path_windows%"
@@ -838,29 +838,29 @@ int main(/+ string[] args +/)
 				
 				);
 			
-			batf.writeString(dmcpathbefore);
+			batf.write(dmcpathbefore);
 			
-			batf.writeString(
+			batf.write(
 				"\r\n   @set _old_dlib=%dlib%"
 			  ~ "\r\n   @set dlib=" ~ dlibname);
 			
-			batf.writeString(
+			batf.write(
 				"\r\n   @set _old_dfl_go_move=%dfl_go_move%"
               ~ "\r\n   @set dfl_go_move=1");
 			
-			batf.writeString("\r\n   @set dfl_failed=-1"); // Let makelib.bat unset this.
+			batf.write("\r\n   @set dfl_failed=-1"); // Let makelib.bat unset this.
 			
-			//batf.writeString("\r\n   @call \"" ~ std.path.buildPath(dflsrcdir, "go.bat") ~ "\"\r\n");
+			//batf.write("\r\n   @call \"" ~ std.path.buildPath(dflsrcdir, "go.bat") ~ "\"\r\n");
             // call the batch with the model parameter
-			batf.writeString("\r\n   @call \"" ~ std.path.buildPath(dflsrcdir, "makelib.bat") ~ "\" %MODEL%\r\n");
+			batf.write("\r\n   @call \"" ~ std.path.buildPath(dflsrcdir, "makelib.bat") ~ "\" %MODEL%\r\n");
 			
-			batf.writeString("\r\n" ~ `@if not "%dfl_failed%" == "" goto fail`); // No longer using go.bat for this.
+			batf.write("\r\n" ~ `@if not "%dfl_failed%" == "" goto fail`); // No longer using go.bat for this.
 			
 			if(dflcs.length)
 			{
-				batf.writeString("\r\n   @set _old_path=%path%");
-				batf.writeString("\r\n   @set path=%dmd_path_windows%;%dmc_path%;%path%");
-				batf.writeString("\r\n   @set dflc=true");
+				batf.write("\r\n   @set _old_path=%path%");
+				batf.write("\r\n   @set path=%dmd_path_windows%;%dmc_path%;%path%");
+				batf.write("\r\n   @set dflc=true");
 				
 				foreach(dflc; dflcs)
 				{
@@ -872,38 +872,38 @@ int main(/+ string[] args +/)
 					if(0 == ssd.length)
 						continue;
 					ssd = std.string.toUpper(ssd[0 .. 1]) ~ ssd[1 .. $];
-					batf.writeString("\r\n   @echo.\r\n   @echo Setting up DFL " ~ ssd ~ "...");
-					batf.writeString("\r\n   @call \"" ~ std.path.buildPath(dflsrcdir, dflc) ~ "\"\r\n");
+					batf.write("\r\n   @echo.\r\n   @echo Setting up DFL " ~ ssd ~ "...");
+					batf.write("\r\n   @call \"" ~ std.path.buildPath(dflsrcdir, dflc) ~ "\"\r\n");
 				}
 				
-				batf.writeString("\r\n   @set dflc=");
-				batf.writeString("\r\n   @set path=%_old_path%");
+				batf.write("\r\n   @set dflc=");
+				batf.write("\r\n   @set path=%_old_path%");
 			}
 			
-			batf.writeString("\r\n   @if %MODEL%==32 (");
-			batf.writeString("\r\n   @set lib_dest=lib");
-			batf.writeString("\r\n   ) else (");
-			batf.writeString("\r\n   @set lib_dest=lib%MODEL%");
-			batf.writeString("\r\n   )");
-			batf.writeString("\r\n   @move /Y dfl*.lib %dmd_path_windows%\\%lib_dest% > NUL"); // Important! no longer using go.bat for this.
-			batf.writeString("\r\n   @set lib_dest=");
+			batf.write("\r\n   @if %MODEL%==32 (");
+			batf.write("\r\n   @set lib_dest=lib");
+			batf.write("\r\n   ) else (");
+			batf.write("\r\n   @set lib_dest=lib%MODEL%");
+			batf.write("\r\n   )");
+			batf.write("\r\n   @move /Y dfl*.lib %dmd_path_windows%\\%lib_dest% > NUL"); // Important! no longer using go.bat for this.
+			batf.write("\r\n   @set lib_dest=");
 			
-			batf.writeString("\r\n:fail\r\n");
+			batf.write("\r\n:fail\r\n");
 			
-			batf.writeString(dmcpathafter);
+			batf.write(dmcpathafter);
 			
-			batf.writeString("\r\n   @set dlib=%_old_dlib%");
+			batf.write("\r\n   @set dlib=%_old_dlib%");
 			
-			batf.writeString("\r\n   @set dfl_go_move=%_old_dfl_go_move%");
+			batf.write("\r\n   @set dfl_go_move=%_old_dfl_go_move%");
 			
-			batf.writeString("\r\n   @set dmd_path=%_old_dmd_path%"
+			batf.write("\r\n   @set dmd_path=%_old_dmd_path%"
 				~ "\r\n   @set dmd_path_windows=%_old_dmd_path_windows%");
 			
-			batf.writeString(
+			batf.write(
 				"\r\n   @" ~ olddrive
 				~ "\r\n   @cd \"" ~ oldcwd ~ "\"");
 			
-			batf.writeString("\r\n");
+			batf.write("\r\n");
 			
 			batf.close();
 			
@@ -922,7 +922,7 @@ int main(/+ string[] args +/)
 			char userc = 'y';
 			for(;;)
 			{
-				string s = to!string(std.string.toLower(din.readLine()));
+				string s = to!string(std.string.toLower(stdin.readln()));
 				if((!s.length && 'y' == userc)
 					|| "y" == s || "yes" == s)
 				{
