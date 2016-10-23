@@ -23,7 +23,6 @@ import std.algorithm;
 import std.array;
 private import std.conv, std.stdio, std.string, std.path, std.file,
 	std.random, std.cstream, std.stream;
-private import std.process;
 private import std.c.stdlib;
 
 private import dfl.all, dfl.internal.winapi, dfl.internal.utf;
@@ -37,6 +36,16 @@ pragma(lib, "oleAut32.lib");
 pragma(lib, "gdi32.lib");
 pragma(lib, "Comctl32.lib");
 pragma(lib, "Comdlg32.lib");
+
+
+// This was formerly in std.process.
+private int system(string command)
+{
+    import std.process;
+    auto pid = spawnShell(command);
+    return wait(pid);
+}
+
 
 private extern(Windows)
 {
@@ -286,7 +295,7 @@ bool doDflSwitch(string arg)
 	{
 		case "dmd":
 			prepare();
-			std.process.system(quotearg(std.path.buildPath(dmdpath_windows, "bin\\dmd.exe\"")));
+			system(quotearg(std.path.buildPath(dmdpath_windows, "bin\\dmd.exe\"")));
 			exit(0); assert(0);
 		
 		case "gui", "winexe", "windowed":
@@ -898,7 +907,7 @@ int main(/+ string[] args +/)
 			
 			batf.close();
 			
-            std.process.system(batfilepath ~ " " ~ model); // pass model as %1
+            system(batfilepath ~ " " ~ model); // pass model as %1
 			
 			std.file.remove(batfilepath);
 		}
@@ -1087,7 +1096,7 @@ int main(/+ string[] args +/)
 			
 			string dmdver;
 			x2 = "dmd" ~ to!string(uniform(1, 10000)) ~ ".info";
-			std.process.system(getshortpath(std.path.buildPath(dmdpath_windows, "bin\\dmd.exe")) ~ " > " ~ x2);
+			system(getshortpath(std.path.buildPath(dmdpath_windows, "bin\\dmd.exe")) ~ " > " ~ x2);
 			scope(exit) std.file.remove(x2);
 			x = std.file.readText(x2);
 			dmdver = scanDmdOut(x, xver);
@@ -1211,7 +1220,7 @@ int main(/+ string[] args +/)
 			int sc;
 			cmdline = getshortpath(std.path.buildPath(dmdpath_windows, "bin\\dmd.exe")) ~ " " ~ std.string.join(dmdargs, " ");
 			writefln("%s", cmdline);
-			sc = std.process.system(cmdline);
+			sc = system(cmdline);
 			if(sc)
 				writef("\nReturned status code %d\n", sc);
 		}
