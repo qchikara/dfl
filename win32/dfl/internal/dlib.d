@@ -332,7 +332,9 @@ private import std.ascii;
 
 alias std.ascii.isHexDigit charIsHexDigit;
 
-
+version (DFL_NO_PICTURE) {
+    alias Object DStream; // deprecated
+} else {
 private import std.stream;
 
 alias std.stream.Stream DStream;
@@ -340,6 +342,7 @@ alias std.stream.Stream DStream;
 alias std.stream.OutputStream DOutputStream;
 
 alias std.stream.StreamException DStreamException;
+}
 
 
 alias Object DObject;

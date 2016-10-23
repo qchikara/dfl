@@ -1292,6 +1292,7 @@ public:
 
 
 ///
+version (DFL_NO_PICTURE) {} else
 class Picture: Image // docmain
 {
 	// Note: requires OleInitialize(null).

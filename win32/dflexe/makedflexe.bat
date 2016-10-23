@@ -4,7 +4,7 @@
 @set _old_dfl_options=%dfl_options%
 @set dfl_options=
 
-@set mydflflags=-version=DFL_NO_DRAG_DROP -version=DFL_NO_MENUS -version=DFL_NO_RESOURCES -version=DFL_NO_IMAGELIST -version=NO_MDI -version=DFL_NO_COMPAT -version=DFL_NO_MULTIPLE_SCREENS
+@set mydflflags=-version=DFL_NO_DRAG_DROP -version=DFL_NO_MENUS -version=DFL_NO_RESOURCES -version=DFL_NO_IMAGELIST -version=NO_MDI -version=DFL_NO_COMPAT -version=DFL_NO_MULTIPLE_SCREENS -version=DFL_NO_PICTURE
 
 @set dfl_flags=%mydflflags%
 

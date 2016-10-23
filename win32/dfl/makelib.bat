@@ -53,10 +53,10 @@ set dfl_libs=%dmc_path%\lib\gdi32.lib %dmc_path%\lib\comctl32.lib %dmc_path%\lib
 @rem   -version=NO_DRAG_DROP -version=NO_MDI
 @rem   -debug=SHOW_MESSAGE_INFO -debug=MESSAGE_PAUSE
 @rem set dfl_flags=%dfl_flags% -debug=SHOW_MESSAGENFO
-set _dfl_flags=%dfl_flags% -wi
+set _dfl_flags=%dfl_flags% -wi -version=DFL_UNICODE -version=DFL_NO_PICTURE
 
 if not "%dfl_debug_flags%" == "" goto dfl_debug_flags_set
-	set dfl_debug_flags=-debug -version=DFL_UNICODE
+	set dfl_debug_flags=-debug
 :dfl_debug_flags_set
 
 if not "%dfl_release_flags%" == "" goto dfl_release_flags_set
@@ -65,7 +65,7 @@ if not "%dfl_release_flags%" == "" goto dfl_release_flags_set
 @rem	set dfl_release_flags=-O -release
 @rem	goto dfl_release_flags_set
 @rem	:dfl_not_release_tango
-	set dfl_release_flags=-O -release -version=DFL_UNICODE
+	set dfl_release_flags=-O -release
 :dfl_release_flags_set
 
 

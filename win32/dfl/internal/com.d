@@ -43,7 +43,7 @@ class DflComObject: ComObject // package
 	}
 }
 
-
+version (DFL_NO_PICTURE) {} else
 class DStreamToIStream: DflComObject, dfl.internal.wincom.IStream
 {
 	this(DStream sourceDStream)
