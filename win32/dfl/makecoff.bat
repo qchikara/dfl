@@ -64,7 +64,8 @@ set dfl_objs=package.obj all.obj base.obj application.obj dlib.obj clib.obj utf.
 @rem   Also update link pragmas for build.
 @rem set dfl_libs_dfl=user32_dfl.lib shell32_dfl.lib olepro32_dfl.lib
 set dfl_libs_dfl=user32.lib shell32.lib oleaut32.lib
-set dfl_libs=gdi32.lib comctl32.lib advapi32.lib comdlg32.lib ole32.lib uuid.lib ws2_32.lib %dfl_libs_dfl%
+set dfl_libs=gdi32.lib comctl32.lib advapi32.lib comdlg32.lib ole32.lib ws2_32.lib %dfl_libs_dfl%
+:: set dfl_libs=gdi32.lib comctl32.lib advapi32.lib comdlg32.lib ole32.lib uuid.lib ws2_32.lib %dfl_libs_dfl%
 
 @rem   -version=NO_DRAG_DROP -version=NO_MDI
 @rem   -debug=SHOW_MESSAGE_INFO -debug=MESSAGE_PAUSE
